@@ -93,23 +93,70 @@ std::string coordinates(int x, int y) {
     return quadrant;
 }
 
-// void difference(int n1[], int n2[]) {
-//     int size1 = sizeof(n1) / sizeof(n1[0]); 
-//     int size2 = sizeof(n2) / sizeof(n2[0]); 
-//     int counter = 0;
-//     int diff[100];
-//     for(int i=0; i<size1; i++){
-//         for(int j=0; j<size2; j++){
-//             if(n1[i] == n2[j]){
-//                 diff[counter] = n1;  
-//                 counter++;
-//             }
-//         }
-//     }
-// }
+// get the difference between arrays
+void difference(int n1[], int n2[], int size1, int size2) {
+    int counter = 0;
+    int diff[100];
+
+    for(int i=0; i<size1; i++){
+        bool found = false;
+        for(int j=0; j<size2; j++){
+            if(n1[i] == n2[j]){
+                found = true;
+                break;
+            } 
+        }
+        if(!found){
+            diff[counter] = n1[i];
+            counter++;
+        }
+    }
+
+    for(int i=0; i<size2; i++){
+        bool found = false;
+        for(int j=0; j<size1; j++){
+            if(n2[i] == n1[j]){
+                found = true;
+                break;
+            } 
+        }
+        if(!found){
+            diff[counter] = n2[i];
+            counter++;
+        }
+    }
+
+    // sort the new array
+    bool swap;
+    for(int i=0; i<counter-1; i++) {
+        swap = false;
+        for(int j=0; j<counter-i-1; j++){
+            if(diff[j] > diff[j+1]){
+                int temp = diff[j];
+                diff[j] = diff[j+1];
+                diff[j+1] = temp;
+                swap = true;
+            }
+        }
+        if(!swap) {
+            break;
+        }
+    }
+
+    std::cout<<"the differences are: ";
+    for(int i=0; i<counter; i++){
+        std::cout<<diff[i]<<" ";
+    }
+}
 
 int main() {
     
+    int i[]={27, 19, 1, 7};
+    int j[]={7, 23, 14, 9, 27};
+    int size1 = sizeof(i) / sizeof(i[0]);
+    int size2 = sizeof(j) / sizeof(j[0]);
+
+    difference(i, j, size1, size2);
 
 
     return 0;
